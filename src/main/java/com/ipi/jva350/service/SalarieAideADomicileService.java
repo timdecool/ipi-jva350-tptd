@@ -42,7 +42,9 @@ public class SalarieAideADomicileService {
 
     /**
      * Calcule la limite maximale de congés prenable autorisée selon les règles de l'entreprise, à savoir :
-     * - de base, les congés acquis en année N-1 dans la proportion selon l'avancement dans l'année,
+     * - de base, les congés acquis en année N-1 dans la proportion selon l'avancement dans l'année
+     * (l'objectif est d'obliger les salariés à lisser leurs congés sur l'année, mais quand même leur permettre de
+     * prendre davantage de congés pendant les vacances d'été)
      * pondéré avec poids plus gros sur juillet et août (20 vs 8),
      * - si la moyenne actuelle des congés pris diffère de 20% de la précédente limite,
      * bonus ou malus de 20% de la différence pour aider à équilibrer la moyenne actuelle des congés pris
@@ -130,7 +132,7 @@ public class SalarieAideADomicileService {
         }
 
         if (nbCongesPayesPrisDecomptesAnneeN > salarieAideADomicile.getCongesPayesRestantAnneeNMoins1()) {
-            throw new SalarieException("Conges Payes Pris Decomptes (" +  nbCongesPayesPrisDecomptesAnneeN
+            throw new SalarieException("Conges Payes Pris Decomptes (" + nbCongesPayesPrisDecomptesAnneeN
                     + ") dépassent les congés acquis en année N-1 : "
                     + salarieAideADomicile.getCongesPayesRestantAnneeNMoins1());
         }
@@ -141,7 +143,7 @@ public class SalarieAideADomicileService {
                 salarieAideADomicile.getMoisDebutContrat(),
                 jourDebut, jourFin);
         if (nbCongesPayesPrisDecomptesAnneeN < limiteEntreprise) {
-            throw new SalarieException("Conges Payes Pris Decomptes (" +  nbCongesPayesPrisDecomptesAnneeN
+            throw new SalarieException("Conges Payes Pris Decomptes (" + nbCongesPayesPrisDecomptesAnneeN
                     + ") dépassent la limite des règles de l'entreprise : " + limiteEntreprise);
         }
 
@@ -152,15 +154,17 @@ public class SalarieAideADomicileService {
     }
 
     /**
-     * Clôture le mois donné :
+     * Clôture le mois en cours du salarie donné (et fait les calculs requis pour sa feuille de paie de ce mois) :
      * (pas forcément en cours, par exemple en cas de retard, vacances de l'entreprise)
-     * Met à jour les jours travaillés et congés payés restants de l'année N, décompte ceux de l'année N-1
-     * on déduit un jour de congé entier pour chaque absence. Par exemple lors des vacances, pour savoir combien de jours de congés payés sont consommés, même si ladite absence dure seulement une demi-journée.
+     * Met à jour les jours travaillés (avec ceux donnés) et congés payés acquis (avec le nombre acquis par mois, qu'on suppose constant de 2.5) de l'année N
+     * (le décompte d ceux de l'année N-1 a par contre déjà été fait dans ajouteConge()).
+     * On déduit un jour de congé entier pour chaque absence. Par exemple lors des vacances, pour savoir combien de jours de congés payés sont consommés, même si ladite absence dure seulement une demi-journée.
      * Si dernier mois de l'année, clôture aussi l'année
-     * @param salarieAideADomicile TODO nom ?
-     * @param joursTravailles
+     * @param salarieAideADomicile salarié
+     * @param joursTravailles jours travaillés dans le mois en cours du salarié
      */
     public void clotureMois(SalarieAideADomicile salarieAideADomicile, double joursTravailles) throws SalarieException {
+        // incrémente les jours travaillés de l'année N du salarié de celles passées en paramètres
         salarieAideADomicile.setJoursTravaillesAnneeN(salarieAideADomicile.getJoursTravaillesAnneeN() + joursTravailles);
 
         salarieAideADomicile.setCongesPayesAcquisAnneeN(salarieAideADomicile.getCongesPayesAcquisAnneeN()

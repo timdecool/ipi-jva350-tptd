@@ -54,8 +54,15 @@ https://git-scm.com/download/win ). Quelques liens :
   - ajoutez dans le workflow Github la configuration de l'analyse Sonar Cloud du code
 - Rédigez **ci-dessous** une courte analyse du premier rapport produit par Sonar (métriques, état général...) :
 
-Le premier rapport Sonar indique...
+Le premier rapport Sonar indique plusieurs problèmes dans le code :
+- 2 problèmes de type "Reliability"
+- 28 problèmes de type "Maintainability"
+- 3,6% de duplications de code
+- 0,0% de couverture des tests
 
+Dans l'ensemble une majorité de "code smells" encombrent le projet et amoindrissent sa maintenabilité.
+Un bug s'est également glissé dans le code.
+La qualité globale est jugée insuffisante par la quality gate de Sonar.
 
 ### Tests unitaires
 

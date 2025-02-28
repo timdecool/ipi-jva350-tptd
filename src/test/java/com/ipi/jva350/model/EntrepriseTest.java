@@ -1,6 +1,7 @@
 package com.ipi.jva350.model;
 
 import com.ipi.jva350.exception.WrongDateException;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -68,5 +69,42 @@ public class EntrepriseTest {
             Entreprise.estDansPlage(date, dateDebut, dateFin);
         });
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'2024-11-01'"
+    })
+    // Given
+    void testEstJourFerieTrue(LocalDate date) {
+        // When
+        boolean estJourFerie = Entreprise.estJourFerie(date);
+        // Then
+        assertTrue(estJourFerie);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'2025-05-02'"
+    })
+        // Given
+    void testEstJourFerieFalse(LocalDate date) {
+        // When
+        boolean estJourFerie = Entreprise.estJourFerie(date);
+        // Then
+        assertFalse(estJourFerie);
+    }
+    @ParameterizedTest
+    @CsvSource({
+            "'2025-04-21'"
+    })
+        // Given
+    void testEstJourFeriePaques(LocalDate date) {
+        // When
+        boolean estJourFerie = Entreprise.estJourFerie(date);
+        // Then
+        assertTrue(estJourFerie);
+    }
+
+
 
 }

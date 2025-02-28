@@ -105,6 +105,32 @@ public class EntrepriseTest {
         assertTrue(estJourFerie);
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "'2025-02-01'"
+    })
+    // Given
+    void testGetPremierJourAnneeDeCongesAvantJuin(LocalDate date) {
+        // When
+        LocalDate premierJourAnneeDeConges = Entreprise.getPremierJourAnneeDeConges(date);
+        // Then
+        LocalDate expected = LocalDate.of(2024,6,1);
+        assertEquals(expected, premierJourAnneeDeConges);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'2025-07-04'"
+    })
+        // Given
+    void testGetPremierJourAnneeDeCongesApresJuin(LocalDate date) {
+        // When
+        LocalDate premierJourAnneeDeConges = Entreprise.getPremierJourAnneeDeConges(date);
+        // Then
+        LocalDate expected = LocalDate.of(2025,6,1);
+        assertEquals(expected, premierJourAnneeDeConges);
+    }
+
 
 
 }

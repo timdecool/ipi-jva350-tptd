@@ -8,6 +8,11 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Le TDD permet de coder la feature directement avec en tête les cas aux bornes
+ * ainsi que de penser aux levées d'exeptions qui puevtn rapidement passer aux travers des mailles du filets en bdd tant que le cas problématique n'est pas apparu pendant le runtime.
+ */
+
 public class EntrepriseTest {
 
     @ParameterizedTest()

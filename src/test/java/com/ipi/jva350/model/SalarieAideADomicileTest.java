@@ -1,12 +1,21 @@
 package com.ipi.jva350.model;
 
+import com.ipi.jva350.repository.SalarieAideADomicileRepository;
+import com.ipi.jva350.service.SalarieAideADomicileService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class SalarieAideADomicileTest {
 
     @Test
@@ -51,5 +60,20 @@ class SalarieAideADomicileTest {
         // Then
         assertTrue(a);
     }
+
+    @ParameterizedTest()
+    @CsvSource({
+            "'2025-02-26','2025-03-01','[2025-02-26, 2025-02-27, 2025-02-28, 2025-03-01]'"
+    })
+    void testCalculJourDeCongesDecomptesPourPlage(String dateDebut, String dateFin, String expected) {
+        SalarieAideADomicile s = new SalarieAideADomicile();
+        LinkedHashSet<LocalDate> actualCongesDecomptes = s.calculeJoursDeCongeDecomptesPourPlage(LocalDate.parse(dateDebut), LocalDate.parse(dateFin));
+
+        System.out.println(actualCongesDecomptes.toString());
+        System.out.println(expected);
+
+        assertEquals(expected, actualCongesDecomptes.toString());
+    }
+
 
 }

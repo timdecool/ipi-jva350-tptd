@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-public class SalariaAideADomicileRepositoryServiceTest {
+class SalariaAideADomicileRepositoryServiceTest {
 
     @Autowired
     SalarieAideADomicileRepository salarieAideADomicileRepository;
@@ -20,7 +20,7 @@ public class SalariaAideADomicileRepositoryServiceTest {
     private TestEntityManager testEntityManager;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
 
         // Set up the fake database data
         SalarieAideADomicile sa1 = new SalarieAideADomicile();
@@ -42,7 +42,7 @@ public class SalariaAideADomicileRepositoryServiceTest {
 
     @Test
     // Given
-    public void testFindByNom() {
+    void testFindByNom() {
         // When
         SalarieAideADomicile salarie = salarieAideADomicileRepository.findByNom("Bertrand");
         // Then
@@ -51,7 +51,7 @@ public class SalariaAideADomicileRepositoryServiceTest {
 
     @Test
     // Given
-    public void testPartCongesPrisTotauxAnneeNMoins1() {
+    void testPartCongesPrisTotauxAnneeNMoins1() {
         // When
         Double part = salarieAideADomicileRepository.partCongesPrisTotauxAnneeNMoins1();
         // Then

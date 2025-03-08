@@ -1,7 +1,6 @@
 package com.ipi.jva350.model;
 
 import com.ipi.jva350.exception.WrongDateException;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -14,14 +13,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * ainsi que de penser aux levées d'exeptions qui puevtn rapidement passer aux travers des mailles du filets en bdd tant que le cas problématique n'est pas apparu pendant le runtime.
  */
 
-public class EntrepriseTest {
+class EntrepriseTest {
 
     @ParameterizedTest()
     @CsvSource({
-            "'2025-02-27', '2025-04-27','2025-03-27'"
+            // Given
+            "'2025-02-27', '2025-04-27','2025-03-27'", // Date dans l'intervalle
+            "'2025-02-27', '2025-03-27', '2025-02-27'", // Date = Date de début
+            "'2025-02-27','2025-03-27','2025-03-27'", // Date = Date de fin
+            "'2025-02-27', '2025-02-27', '2025-02-27'" // Date = Date de début = Date de fin
     })
-
-        // Given
     void testEstDansPlage(LocalDate dateDebut, LocalDate dateFin, LocalDate date) throws WrongDateException {
         // When
         boolean estDansPlage = Entreprise.estDansPlage(date, dateDebut, dateFin);
@@ -32,7 +33,8 @@ public class EntrepriseTest {
 
     @ParameterizedTest()
     @CsvSource({
-            "'2025-02-27','2025-03-27','2025-04-27'"
+            "'2025-02-27','2025-03-27','2025-04-27'", // Date après la plage
+            "'2025-02-27','2025-03-27','2025-01-27'" // Date avant la plage
     })
 
         // Given
@@ -41,21 +43,6 @@ public class EntrepriseTest {
         boolean estDansPlage = Entreprise.estDansPlage(date, dateDebut, dateFin);
         // Then
         assertFalse(estDansPlage);
-
-    }
-
-    @ParameterizedTest()
-    @CsvSource({
-            "'2025-02-27','2025-03-27','2025-03-27'"
-    })
-
-        // Given
-    void testDateEgalDateFin(LocalDate dateDebut, LocalDate dateFin, LocalDate date) throws WrongDateException {
-        // When
-        boolean estDansPlage = Entreprise.estDansPlage(date, dateDebut, dateFin);
-        // Then
-        assertTrue(estDansPlage);
-
     }
 
     @ParameterizedTest
@@ -72,7 +59,8 @@ public class EntrepriseTest {
 
     @ParameterizedTest
     @CsvSource({
-            "'2024-11-01'"
+            "'2024-11-01'",
+            "'2025-04-21'" // Pâques
     })
     // Given
     void testEstJourFerieTrue(LocalDate date) {
@@ -92,17 +80,6 @@ public class EntrepriseTest {
         boolean estJourFerie = Entreprise.estJourFerie(date);
         // Then
         assertFalse(estJourFerie);
-    }
-    @ParameterizedTest
-    @CsvSource({
-            "'2025-04-21'"
-    })
-        // Given
-    void testEstJourFeriePaques(LocalDate date) {
-        // When
-        boolean estJourFerie = Entreprise.estJourFerie(date);
-        // Then
-        assertTrue(estJourFerie);
     }
 
     @ParameterizedTest

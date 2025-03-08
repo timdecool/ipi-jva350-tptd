@@ -12,16 +12,16 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class SalarieAideADomicileServiceTest {
+class SalarieAideADomicileServiceTest {
 
     @Mock
     private SalarieAideADomicileRepository repository;
     @InjectMocks
-    private SalarieAideADomicileService service = new SalarieAideADomicileService();
+    private SalarieAideADomicileService service;
 
     @Test
     // Given
-    public void testCalculeLimiteEntrepriseCongesPermis() {
+    void testCalculeLimiteEntrepriseCongesPermis() {
         // When
         LocalDate moisEnCours = LocalDate.of(2024, 5, 5);
         double congesPayesAcquisAnneeNMoins1 = 10;
@@ -35,7 +35,7 @@ public class SalarieAideADomicileServiceTest {
 
     @Test
     // Given
-    public void testCalculeLimiteEntrepriseCongesPermis10ansAnciennnete() {
+    void testCalculeLimiteEntrepriseCongesPermis10ansAnciennnete() {
         // When
         LocalDate moisEnCours = LocalDate.of(2024, 5, 5);
         double congesPayesAcquisAnneeNMoins1 = 10;
@@ -53,7 +53,7 @@ public class SalarieAideADomicileServiceTest {
     // Ce test vérifie que le bonue d'ancienneté est bien de 10 maximum
     @Test
     // Given
-    public void testCalculeLimiteEntrepriseCongesPermis15ansAnciennnete() {
+    void testCalculeLimiteEntrepriseCongesPermis15ansAnciennnete() {
         // When
         LocalDate moisEnCours = LocalDate.of(2024, 5, 5);
         double congesPayesAcquisAnneeNMoins1 = 10;

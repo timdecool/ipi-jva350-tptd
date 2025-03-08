@@ -188,4 +188,11 @@ fichier ne dépasse pas 1 MO.
 - BONUS : Créez une petite documentation statique en utilisant MkDocs.
 - Rédigez **ci-dessous** une courte analyse du rapport produit par Sonar (métriques, évolution, état général...) :
 
-Le rapport Sonar final indique...
+Le rapport Sonar final indique un nombre bien moindre de problèmes concernant la qualité du code.
+Dans le détail, il reste 4 issues sur les 30 issues initiales :
+- 1 dans la catégorie Consistency
+- 2 dans la catégorie Intentionality
+- 1 dans la catégorie Adaptability
+Les duplications de code sont désormais à 0,0%.
+La couverture des tests est passé de 0% à 54,9%, ce qui reste néanmoins au seuil exigé par la quality gate par défaut de SonarQube (80%).
+En global, on peut remarquer que la base de code a gagné en maintenabilité et comporte moins d'erreurs.
